@@ -278,13 +278,13 @@ where
     // to avoid this, we load a random pair of points and replace P with it *only if* `is_identity == true`
     // we don't even check (rand_x, rand_y) is on the curve, since we don't care about the output
     let mut rng = ChaCha20Rng::from_entropy();
-    let [rand_x, rand_y] = [(); 2].map(|_| FC::FieldType::random(&mut rng));
+    let [rand_x, rand_y] = [(); 2].map(|_| <FC::FieldType as ff::Field>::random(&mut rng));
     let [rand_x, rand_y] = [rand_x, rand_y].map(|x| chip.load_private(ctx, x));
     let rand_pt = EcPoint::new(rand_x, rand_y);
     P = ec_select(chip, ctx, rand_pt, P, is_identity);
 
     let out = ec_sub_unequal(chip, ctx, P, Q, false);
-    let zero = chip.load_constant(ctx, FC::FieldType::zero());
+    let zero = chip.load_constant(ctx, <FC::FieldType as ff::Field>::zero());
     ec_select(chip, ctx, EcPoint::new(zero.clone(), zero), out, is_identity)
 }
 

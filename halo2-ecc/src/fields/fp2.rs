@@ -73,7 +73,7 @@ where
     FieldVector<FpChip::UnsafeFieldPoint>: From<FieldVector<FpChip::FieldPoint>>,
     FieldVector<FpChip::FieldPoint>: From<FieldVector<FpChip::ReducedFieldPoint>>,
 {
-    const PRIME_FIELD_NUM_BITS: u32 = FpChip::FieldType::NUM_BITS;
+    const PRIME_FIELD_NUM_BITS: u32 = <FpChip::FieldType as ff::PrimeField>::NUM_BITS;
     type UnsafeFieldPoint = FieldVector<FpChip::UnsafeFieldPoint>;
     type FieldPoint = FieldVector<FpChip::FieldPoint>;
     type ReducedFieldPoint = FieldVector<FpChip::ReducedFieldPoint>;
